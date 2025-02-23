@@ -16,8 +16,28 @@ class VideoGameController extends Controller
 
     //View all
 
-    public function index(){
-        return response()->json(VideoGame::all(),200);
+    public function index(Request $request){
+
+        $query = VideoGame::query();
+
+        $query->where('user_id', auth()->id());
+
+        if($request->has('genre')){
+            $games = $query->where('genre', $request->input('genre'))->get();
+
+            if($games->isEmpty()){
+                return response()->json(['message' => 'There is not a game with this genre.'], 404);
+            }
+        }
+
+        if($request->has('sort') && in_array($request->input('sort'), ['asc', 'desc'])){
+            $query->orderBy('release_date', $request->input('sort'));
+        }else{
+            $query->orderBy('id', 'asc');
+        }
+
+        return response()->json($query->get(), 200);
+        // return response()->json(VideoGame::all(),200);
     }
 
     //View one
@@ -34,16 +54,22 @@ class VideoGameController extends Controller
     //Add a new Game
 
     public function gameCreation(Request $request){
-        $validated = $request->validate([
-            'title'=>'required|string|max:50',
-            'description'=> 'required',
-            'release_date' => 'required|date',
-            'genre' => 'required|string|max:20'
-        ]);
+        try{
+            $validated = $request->validate([
+                'title'=>'required|string|max:50',
+                'description'=> 'required',
+                'release_date' => 'required|date',
+                'genre' => 'required|string|max:20'
+            ]);
 
-        $videoGame = VideoGame::create($validated);
+            $validated['user_id'] = auth()->id();
 
-        return response()->json($videoGame, 201);
+            $videoGame = VideoGame::create($validated);
+
+            return response()->json($videoGame, 201);
+        }catch(\Illuminate\Validation\ValidationException $e){
+            return response()->json(['errors' => $e->errors()],422);
+        }
     }
 
     //Edit a Game
@@ -51,7 +77,11 @@ class VideoGameController extends Controller
     public function gameUpdate(Request $request, $id){
         $videoGame = VideoGame::find($id);
 
-        if($videoGame){
+        if(!$videoGame){
+            return response()->json(['message' => 'Video Game not found'], 404);
+        }
+
+        try{
             $validated = $request->validate([
             'title'=>'required|string|max:50',
             'description'=> 'required',
@@ -61,9 +91,11 @@ class VideoGameController extends Controller
 
             $videoGame->update($validated);
             return response()->json($videoGame, 200);
+        }catch(\Illuminate\Validation\ValidationException $e){
+            return response()->json(['errors' => $e->errors()], 422);
         }
 
-        return response()->json(['message' => 'Video Game not found'], 404);
+        
     }
     
     // Delete a Game

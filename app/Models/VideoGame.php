@@ -9,5 +9,9 @@ class VideoGame extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'release_date', 'genre'];
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    protected $fillable = ['title', 'description', 'release_date', 'genre', 'user_id'];
 }

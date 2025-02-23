@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VideoGameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\VideoGame;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/video-games', [VideoGameController::class, 'gameCreation']);
     Route::put('/video-games/{id}', [VideoGameController::class,'gameUpdate']);
     Route::delete('/video-games/{id}', [VideoGameController::class, 'gameDeletion']);
+});
+
+Route::get('/genres', function () {
+    return VideoGame::select('genre')->distinct()->pluck('genre');
 });
