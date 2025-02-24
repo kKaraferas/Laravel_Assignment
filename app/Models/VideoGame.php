@@ -13,5 +13,10 @@ class VideoGame extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function reviews(){
+        return $this->hasMany(Review::class);
+    }
+
+
     protected $fillable = ['title', 'description', 'release_date', 'genre', 'user_id'];
 }

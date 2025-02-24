@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "47709113-552f-4939-91b3-89b2ce5db917",
+		"name": "VIdeoGame API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42536508"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Reviews",
+					"item": [
+						{
+							"name": "Add a Review",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rating\": , //required float\r\n    \"review\": \"\" //Required String.\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/video-games/{id}/reviews",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"video-games",
+										"{id}",
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a review",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/video-games/{id}/reviews",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"video-games",
+										"{id}",
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Review",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rating\": , //required float\r\n    \"review\": \"\" //Required String.\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/reviews/{id}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"reviews",
+										"{id}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a Review",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/reviews/{id}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"reviews",
+										"{id}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "",
+									"description": "Reuired string.",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"description": "Required unique email.",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"description": "Required string, 8 chars min.",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "",
+									"description": "Required role (user or admin).",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Log in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "",
+									"description": "Reuired email.",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"description": "Required password.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Log Out",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Video Game Management",
+			"item": [
+				{
+					"name": "Get all games",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/video-games/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"video-games",
+								""
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "",
+									"description": "Genre selection.",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "",
+									"description": "Sorting by release date. (asc or desc)",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one game",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/video-games/{id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"video-games",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Game Creation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "",
+									"description": "Required string.",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"description": "Required text.",
+									"type": "text"
+								},
+								{
+									"key": "release_date",
+									"value": "",
+									"description": "Required date.",
+									"type": "text"
+								},
+								{
+									"key": "genre",
+									"value": "",
+									"description": "Required string.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/video-games/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"video-games",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GameUpdate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"\", //Required\r\n    \"description\": \"\", //Required\r\n    \"release_date\": \"\", //Required\r\n    \"genre\": \"\" //Required\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/video-games/{id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"video-games",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Game Deletion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/video-games/{id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"video-games",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		}
+	]
+}

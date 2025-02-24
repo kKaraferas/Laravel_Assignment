@@ -47,4 +47,8 @@ class User extends Authenticatable
     public function videoGames(){
         return $this->hasMany(VideoGame::class);
     }
+
+    public function reviews(){
+        return $this->hasMany(Review::class);
+    }
 }

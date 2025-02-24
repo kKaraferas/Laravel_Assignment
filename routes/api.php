@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\VideoGameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\VideoGame;
+use App\Http\Controllers\Api\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,12 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::get('/genres', function () {
     return VideoGame::select('genre')->distinct()->pluck('genre');
 });
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/video-games/{videoGameId}/reviews', [ReviewController::class, 'createReview']);
+    Route::put('/reviews/{id}', [ReviewController::class, 'updateReview']);
+    Route::delete('/reviews/{id}', [ReviewController::class, 'deleteReview']);
+});
+
+Route::get('/video-games/{videoGameId}/reviews', [ReviewController::class, 'getReviewsForGame']);
+
