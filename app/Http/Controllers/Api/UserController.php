@@ -13,26 +13,18 @@ class UserController extends Controller
 {
     public function registerUser(Request $request){
         try{
-            //Validate the registration
             $request->validate([
                 'name'=> 'required|string|max:50',
                 'email'=> 'required|string|email|unique:users',
-                'password'=>'required|min:8'
+                'password'=>'required|min:8',
+                'role' => 'required|string',
             ]);
 
-            // if ($request->fails()){
-            //     return response()->json([
-            //         'status' => false,
-            //         'message' => 'Validation error',
-                    
-            //     ], 401);
-            // }
-            
-            //User Creation
             $user = User::create([
                 'name'=>$request->name,
                 'email'=>$request->email,
                 'password'=>Hash::make($request->password),
+                'role' => $request->role,
             ]);
 
             $token = $user->createToken('auth_token')->plainTextToken;
@@ -43,8 +35,19 @@ class UserController extends Controller
                 'token'=>$token
             ]);
         }
+
+        catch(\Illuminate\Validation\ValidationException $e){
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $e->errors()
+            ], 422);
+        }
         catch(\Throwable $th){
-            return 0;
+            return response()->json([
+                'status' => false,
+                'message'=> 'An error has occured during registration.',
+            ], 500);
         }
     }
 
@@ -54,16 +57,6 @@ class UserController extends Controller
             'password'=>'required'
         ]);
 
-        ///////check here maybe one out
-
-        // if(!$user || !Hash::check($request->password, $user->password)){
-        //     return response()->json([
-        //         'status' => false,
-        //         'message' => 'Validation error',
-        //         'errors' => $request->errors(),
-        //     ]);
-        // }
-
         if(!Auth::attempt($request->only(['email', 'password']))){
             return response()->json([
                 'status' => false,
@@ -72,8 +65,6 @@ class UserController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-
-        //////////
 
         $token = $user -> createToken('auth_token')->plainTextToken;
 
